@@ -1,0 +1,9 @@
+{
+ "service": {
+   "name": "cadvisor",
+   "tags": ["monitor"],
+   "port": 8080,
+   "address": "cadvisor"
+ }
+
+}

@@ -1,0 +1,8 @@
+{
+ "service": {
+   "name": "node_exporter_agent",
+   "tags": ["monitor"],
+   "port": 9100,
+   "address": "agent"
+ }
+}
