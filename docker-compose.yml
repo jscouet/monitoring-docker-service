@@ -3,7 +3,7 @@ version: '2.3'
 services:
     cadvisor:
         container_name: cadvisor
-        image: google/cadvisor:0.29
+        image: google/cadvisor:v0.29
         restart: unless-stopped
         networks:
           - service
