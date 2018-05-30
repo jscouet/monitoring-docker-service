@@ -19,7 +19,7 @@ pipeline {
             steps {
                 withDockerServer([credentialsId: '8cacf70b-c496-4719-a704-b90b8accc881', uri: 'tcp://service.jsoude.net:2376']) {
                     withDockerRegistry([credentialsId: '42cce0f9-7a02-4137-8273-5101f614328e', url: 'https://index.docker.io/v1/']) {
-                        sh 'docker-compose up -d'
+                        sh 'docker-compose up --project-directory=monitoring-docker-service -d'
                     }   
                 }
             }
