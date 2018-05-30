@@ -7,6 +7,13 @@ pipeline {
     }
         
     stages {
+        stage("Where") {
+            steps {
+                sh 'ls -la'
+                sh 'pwd'
+            }
+        }
+
         stage("Deploy") {
             agent { node { label 'docker' } }
             steps {
