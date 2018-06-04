@@ -11,7 +11,6 @@ pipeline {
             steps {
                 sh 'ls -la'
                 sh 'pwd'
-                sh 'echo $MYDOMAIN'
             }
         }
 
@@ -34,11 +33,11 @@ pipeline {
             }
         }
                 
-        //stage("clean workspace") {
-        //    steps {
-        //        cleanWs()
-        //    }
-        //}
+        stage("clean workspace") {
+            steps {
+                cleanWs()
+            }
+        }
     }
     post {
         failure {
