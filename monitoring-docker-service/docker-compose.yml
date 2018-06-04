@@ -56,7 +56,7 @@ services:
           - GF_SECURITY_ADMIN_PASSWORD=PASSWORD
         volumes:
           - grafana_data:/var/lib/grafana
-          - ./grafana/config:/etc/grafana
+        #  - ./grafana/config:/etc/grafana
         links:
           - prometheus:prometheus
         extra_hosts:
