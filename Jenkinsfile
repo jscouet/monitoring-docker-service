@@ -1,5 +1,5 @@
 pipeline {
-    agent { node { label 'docker' } }
+    agent { node { label 'service-host' } }
 
 
     environment {
@@ -15,7 +15,7 @@ pipeline {
         }
 
         stage("Deploy") {
-            agent { node { label 'docker' } }
+            agent { node { label 'service-host' } }
             steps {
                 echo 'HOSTNAME'
                 sh 'hostname -f'
@@ -33,11 +33,11 @@ pipeline {
             }
         }
                 
-        stage("clean workspace") {
-            steps {
-                cleanWs()
-            }
-        }
+        //stage("clean workspace") {
+        //    steps {
+        //        cleanWs()
+        //    }
+        //}
     }
     post {
         failure {
