@@ -15,7 +15,7 @@ pipeline {
                         sh '''
                         echo "begin deploy"
                         pwd
-                        cd monitoring-docker-service'
+                        cd monitoring-docker-service
                         pwd
                         docker-compose up -d
                         '''
