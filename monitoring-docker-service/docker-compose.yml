@@ -17,7 +17,7 @@ services:
 
     influxdb:
         container_name: influxdb
-        image: jsoude/influxdb-collectd
+        image: jsoude/influxdb-collectd:1.5.3
         restart: unless-stopped
         labels:
           - "traefik.frontend.rule=Host:influxdb.${MYDOMAIN}"
