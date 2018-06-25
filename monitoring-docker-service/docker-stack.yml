@@ -26,12 +26,8 @@ services:
         volumes:
           - influxdb_data:/var/lib/influxdb
         ports:
-          - mode: host
-            publised: 8086
-            target: 8086
-          - mode: host
-            published: 25826
-            target: 25826/udp
+          - 8086:8086
+          - 25826:25826/udp
 
     grafana:
         image: grafana/grafana:4.6.3
