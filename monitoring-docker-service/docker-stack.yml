@@ -31,7 +31,8 @@ services:
             target: 8086
           - mode: host
             published: 25826
-            target: "25826/udp"
+            target: 25826
+            protocol: udp
 
     grafana:
         image: grafana/grafana:4.6.3
