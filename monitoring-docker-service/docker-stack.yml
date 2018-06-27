@@ -105,6 +105,7 @@ services:
           - cadvisor:cadvisor 
           - node-exporter:node-exporter
           - consul:consul
+          - alertmanager:alertmanager
         ports:
           - mode: host
             published: 9090
@@ -179,7 +180,50 @@ services:
           - /:/rootfs:ro
           - /sys:/host/sys:ro
           - /proc:/host/proc:ro
-        
+
+    blackbox-exporter:
+        image: prom/blackbox-exporter
+        restart: unless-stopped
+        deploy: 
+            labels:
+            - "traefik.frontend.rule=Host:blackbox.${MYDOMAIN}"
+            - "traefik.port=9115"
+        networks:
+          - service
+        expose:
+          - 9115
+        links:
+          - cadvisor:cadvisor 
+          - node-exporter:node-exporter
+          - consul:consul
+          - blackbox-exporter:blackbox-exporter
+          - alertmanager:alertmanager
+        extra_hosts:
+          - "nonso:172.17.0.1"
+          - "local:172.17.0.1"
+#        volumes:
+#          - ./blackbox/config:/etc/blackbox_exporter/
+ 
+    alert-manager:
+        image: prom/alertmanager
+        restart: unless-stopped
+        links:
+          - cadvisor:cadvisor 
+          - node-exporter:node-exporter
+          - consul:consul
+          - blackbox-exporter:blackbox-exporter
+          - alertmanager:alertmanager
+        extra_hosts:
+          - "nonso:172.17.0.1"
+          - "local:172.17.0.1"
+        network:
+          - service
+        expose:
+          - 9093
+        volumes:
+          - ./alertmanager/config:/etc/alertmanager
+                      
+ 
 volumes:
   grafana5_data:
     driver: nfs

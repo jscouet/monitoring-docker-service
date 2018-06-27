@@ -17,6 +17,12 @@ global:
   # - "first.rules"
   # - "second.rules"
 
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      - alertmanager:9093
+
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 #scrape_configs:
@@ -43,6 +49,24 @@ scrape_configs:
         action: keep
       - source_labels: [__meta_consul_service]
         target_label: service
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]  # Look for a HTTP 200 response.
+    static_configs:
+      - targets:
+        - https://gogs.service.jsoude.net    # Target to probe with http.
+        - https://service.jsoude.net:8080   # Target to probe with https.
+        - https://jenkins.service.jsoude.net # Target to probe with http on port 8080.
+        - https://appart.service.jsoude.net # Target to probe with http on port 8080.
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115  # The blackbox exporter's real hostname:port.
+
 
 #  - job_name: 'docker'
 #         # metrics_path defaults to '/metrics'
