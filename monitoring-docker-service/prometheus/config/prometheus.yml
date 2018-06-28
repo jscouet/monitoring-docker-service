@@ -17,6 +17,9 @@ global:
   # - "first.rules"
   # - "second.rules"
 
+rule_files:
+  - "alert.rules"
+
 alerting:
   alertmanagers:
   - static_configs:

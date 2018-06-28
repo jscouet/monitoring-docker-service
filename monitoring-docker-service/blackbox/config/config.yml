@@ -1,0 +1,5 @@
+global:
+  # The smarthost and SMTP sender used for mail notifications.
+  smtp_smarthost: 'local:25'
+  smtp_from: 'jeremy@jsoude.net'
+

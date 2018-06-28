@@ -201,8 +201,8 @@ services:
         extra_hosts:
           - "nonso:172.17.0.1"
           - "local:172.17.0.1"
-#        volumes:
-#          - ./blackbox/config:/etc/blackbox_exporter/
+        volumes:
+          - ./blackbox/config:/etc/blackbox_exporter/
  
     alert-manager:
         image: prom/alertmanager
@@ -216,7 +216,7 @@ services:
         extra_hosts:
           - "nonso:172.17.0.1"
           - "local:172.17.0.1"
-        network:
+        networks:
           - service
         expose:
           - 9093
