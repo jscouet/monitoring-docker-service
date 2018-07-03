@@ -2,8 +2,12 @@ version: '3.2'
 
 services:
     cadvisor:
-        image: google/cadvisor:v0.30.0
+        image: google/cadvisor:v0.30.2
         restart: unless-stopped
+        deploy:
+            labels:
+            - "traefik.frontend.rule=Host:cadvisor.${MYDOMAIN}"
+            - "traefik.port=8080"
         networks:
           - service
         volumes:
@@ -64,7 +68,7 @@ services:
 
     grafana5:
         container_name: grafana5
-        image: grafana/grafana:5.1.4
+        image: grafana/grafana:5.2.1
         restart: unless-stopped
         networks:
           - service
