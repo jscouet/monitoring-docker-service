@@ -5,6 +5,7 @@ route:
  routes:
   # Send severity=slack alerts to slack.
   - receiver: slack_general
+    group_by: [alertname, datacenter, app]
 
 #  - match:
 #      severity: slack
