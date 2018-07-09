@@ -93,7 +93,7 @@ services:
 
 
     prometheus:
-        image: prom/prometheus:v2.2.1
+        image: prom/prometheus:v2.3.1
         restart: unless-stopped
         networks:
           - service
@@ -124,7 +124,7 @@ services:
           - prometheus_data:/prometheus
 
     consul:
-        image: consul:1.0.6
+        image: consul:1.2.0
         restart: unless-stopped
         networks:
           - service
@@ -174,7 +174,7 @@ services:
 #
         
     node-exporter:
-        image: prom/node-exporter
+        image: prom/node-exporter:v0.16.0
         restart: unless-stopped
         networks:
           - service
@@ -186,7 +186,7 @@ services:
           - /proc:/host/proc:ro
 
     blackbox-exporter:
-        image: prom/blackbox-exporter
+        image: prom/blackbox-exporter:v0.12.0
         restart: unless-stopped
         deploy: 
             labels:
@@ -208,8 +208,8 @@ services:
         volumes:
           - ./blackbox/config:/etc/blackbox_exporter/
  
-    alert-manager:
-        image: prom/alertmanager
+    alertmanager:
+        image: prom/alertmanager:v0.15.0
         restart: unless-stopped
         links:
           - cadvisor:cadvisor 

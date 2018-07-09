@@ -1,0 +1,49 @@
+groups:
+- name: alert.rules
+  rules:
+  - alert: DailyTest
+    expr: vector(1)
+    for: 1m
+    annotations:
+      summary: Daily alert test
+  - alert: HighCPU
+    expr: ((sum by(instance, job) (node_cpu_seconds_total{mode=~"user|nice|system|irq|softirq|steal|idle|iowait"}))
+      - (sum by(instance, job) (node_cpu_seconds_total{mode=~"idle|iowait"}))) / (sum by(instance,
+      job) (node_cpu_seconds_total{mode=~"user|nice|system|irq|softirq|steal|idle|iowait"})) * 100
+      > 50
+    for: 10m
+    labels:
+      service: backend
+    annotations:
+      description: This machine  has really high CPU usage for over 10m
+  - alert: HighMEM node exporter
+    expr: ((node_memory_MemTotal_bytes{instance="node-exporter:9100"} - node_memory_MemAvailable_bytes{instance="node-exporter:9100"}) / node_memory_MemTotal_bytes{instance=~"node-exporter:9100"}) * 100 > 80
+    for: 10m
+    labels:
+      service: backend
+    annotations:
+      description: Node-exporter  has really high Memory usage for over 10m
+      summary: High MEM Usage node-exporter
+  - alert: load 1 service
+    expr: node_load1{job="service"} > 2.0
+    for: 5m
+    labels:
+      service: backend
+    annotations:
+      description: This machine  has really high Load 1m for over 5m
+      summary: "High load Usage 1m {{ $labels.instance }}"
+  - alert: load 5 service
+    expr: node_load5{job="service"} > 2.0
+    for: 10m
+    labels:
+      service: backend
+    annotations:
+      description: This machine  has really high Load 5m usage for over 10m
+      summary: "High load Usage 5m {{ $labels.instance }}"
+  - alert: EndpointDown
+    expr: probe_success == 0
+    for: 30s
+    labels:
+      severity: "critical"
+    annotations:
+      summary: "Endpoint {{ $labels.instance }} down" 
