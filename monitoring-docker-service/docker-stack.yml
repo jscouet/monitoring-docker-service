@@ -211,6 +211,11 @@ services:
     alertmanager:
         image: prom/alertmanager:v0.15.0
         restart: unless-stopped
+        command: --web.external-url=https://alertmanager.${MYDOMAIN}/
+        deploy:
+            labels:
+            - "traefik.frontend.rule=Host:alertmanager.${MYDOMAIN}"
+            - "traefik.port=9093"
         links:
           - cadvisor:cadvisor 
           - node-exporter:node-exporter
